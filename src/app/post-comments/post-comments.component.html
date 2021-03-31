@@ -1,0 +1,42 @@
+<app-navbar [userLogged]="true"></app-navbar>
+<div class="container">
+    <div style="height:auto; width: 400px;">
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+            <div class="form-group text-left">
+                <label>Comment</label>
+                <input type="text" formControlName="message" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.message.errors }" />
+                <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+                    <div *ngIf="f.message.errors.required">Comment is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-xl">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Comment</th>
+                        <th scope="col">created by</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf='post'>
+                    <tr *ngFor="let comment of post.comment">
+                        <td>{{comment.message}}</td>
+                        <td>{{comment.user_id.firstName + comment.user_id.lastName}}</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+            <div *ngIf="!post || !post.comment || !post.comment.length"> No topics available </div>
+        </div>
+    </div>
+</div>

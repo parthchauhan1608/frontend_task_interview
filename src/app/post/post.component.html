@@ -1,0 +1,52 @@
+<app-navbar [userLogged]="true"></app-navbar>
+<div class="container">
+    <div style="height:auto; width: 400px;">
+        <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            <div class="form-group text-left">
+                <label>Name</label>
+                <input type="text" formControlName="name" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">name is required</div>
+                </div>
+            </div>
+            <div class="form-group text-left">
+                <label>Discription</label>
+                <input type="discription" formControlName="discription" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.discription.errors }" />
+                <div *ngIf="submitted && f.discription.errors" class="invalid-feedback">
+                    <div *ngIf="f.discription.errors.required">discription is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-xl">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">discription</th>
+                        <th scope="col">created by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let post of posts">
+                        <td><a [routerLink]="['/post/comments',post._id]">{{post.name}}</a></td>
+                        <td>{{post.discription}}</td>
+                        <td>{{post.user_id.firstName + post.user_id.lastName}}</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+            <div *ngIf ="!posts || !posts.length"> No topics available </div>
+        </div>
+    </div>
+</div>
