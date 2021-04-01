@@ -11,6 +11,16 @@ export class PostService {
     private http: HttpClient
   ) { }
 
+  getHeaderWithToken() {
+    let token = window.localStorage.getItem('token');
+    return new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'auth_token': token
+      }
+    )
+  }
+
   /**
 * @description
 * Create Post Request to backend.
@@ -18,10 +28,7 @@ export class PostService {
 * @param post form value.
 */
   createPost(post: any) {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.post(`${environment.base_user}/post`, post, { headers: headers });
+    return this.http.post(`${environment.base_user}/post`, post, { headers: this.getHeaderWithToken() });
   }
 
   /**
@@ -29,10 +36,7 @@ export class PostService {
 * Get Post Request to backend.
 */
   getPost(topic_id: any) {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.get(`${environment.base_user}/post/${topic_id}`, { headers: headers });
+    return this.http.get(`${environment.base_user}/post/${topic_id}`, { headers: this.getHeaderWithToken() });
   }
 
   /**
@@ -42,10 +46,7 @@ export class PostService {
 * @param comment form value.
 */
   commentOnPost(post_id: any, comment: any) {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.post(`${environment.base_user}/post/comment/${post_id}`, comment, { headers: headers });
+    return this.http.post(`${environment.base_user}/post/comment/${post_id}`, comment, { headers: this.getHeaderWithToken() });
   }
 
 
@@ -54,9 +55,6 @@ export class PostService {
 * Get Post Request to backend.
 */
   getPostById(post_id: any) {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.get(`${environment.base_user}/post/postId/${post_id}`, { headers: headers });
+    return this.http.get(`${environment.base_user}/post/postId/${post_id}`, { headers: this.getHeaderWithToken() });
   }
 }

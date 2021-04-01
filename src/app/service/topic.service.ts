@@ -11,6 +11,17 @@ export class TopicService {
     private http: HttpClient
   ) { }
 
+
+  getHeaderWithToken() {
+    let token = window.localStorage.getItem('token');
+    return new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'auth_token': token
+      }
+    )
+  }
+
   /**
  * @description
  * Create Topic Request to backend.
@@ -18,10 +29,7 @@ export class TopicService {
  * @param topic form value.
  */
   createTopic(topic: any) {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.post(`${environment.base_user}/topic`, topic, { headers: headers });
+    return this.http.post(`${environment.base_user}/topic`, topic, { headers: this.getHeaderWithToken() });
   }
 
   /**
@@ -29,10 +37,7 @@ export class TopicService {
 * Get Topic Request to backend.
 */
   getTopic() {
-    let headers = new HttpHeaders();
-    const token = window.localStorage.getItem('token');
-    headers = headers.set('Authorization', token);
-    return this.http.get(`${environment.base_user}/topic`, { headers: headers });
+    return this.http.get(`${environment.base_user}/topic`, { headers: this.getHeaderWithToken() });
   }
 
 
