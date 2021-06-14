@@ -14,6 +14,7 @@ import { TopicComponent } from './topic/topic.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PostComponent } from './post/post.component';
 import { PostCommentsComponent } from './post-comments/post-comments.component';
+import { httpInterceptors } from './http-interceptor';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { PostCommentsComponent } from './post-comments/post-comments.component';
       }
     })
   ],
-  providers: [],
+  providers: [httpInterceptors],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
